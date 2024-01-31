@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/Settings.gd" type="Script" id=1]
+
+[node name="Settings" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="FullBG" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.164706, 0.164706, 0.164706, 1 )
+
+[node name="TopVBox" type="VBoxContainer" parent="FullBG"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -60.0
+margin_top = 20.0
+margin_right = 60.0
+margin_bottom = 40.0
+alignment = 1
+
+[node name="SettingsLabel" type="Label" parent="FullBG/TopVBox"]
+margin_top = 3.0
+margin_right = 120.0
+margin_bottom = 17.0
+text = "Store"
+align = 1

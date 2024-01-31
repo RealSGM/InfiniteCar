@@ -1,0 +1,113 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Assets/KenneyCars/police.dae" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/EnemyCar.gd" type="Script" id=2]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.756377, 1.29183, 1.33769 )
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 1, 1, 1.40303 )
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 2.2557, 0.554429, 5.82884 )
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.512375, 0.651425, 4.01417 )
+
+[node name="NPCCar" type="RigidBody" groups=["EnemyCar"]]
+mass = 0.1
+script = ExtResource( 2 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02632, 0 )
+shape = SubResource( 1 )
+
+[node name="GroundCheck" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.744427, 0 )
+enabled = true
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="Delay" type="Timer" parent="Timers"]
+wait_time = 2.0
+one_shot = true
+
+[node name="InitialDelay" type="Timer" parent="Timers"]
+
+[node name="LightTimerL" type="Timer" parent="Timers"]
+wait_time = 0.5
+
+[node name="LightTimerR" type="Timer" parent="Timers"]
+wait_time = 0.5
+
+[node name="LeftIndicator" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499409, 0.763616, -1.5737 )
+light_color = Color( 1, 0.599173, 0.423529, 1 )
+light_energy = 0.0
+omni_range = 0.3
+
+[node name="RightIndicator" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.41986, 0.763616, -1.5737 )
+light_color = Color( 1, 0.690196, 0.423529, 1 )
+light_energy = 0.0
+omni_range = 0.3
+
+[node name="BrakeLightL" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.499409, 0.763616, -1.5737 )
+light_color = Color( 0.988235, 0, 0, 1 )
+light_energy = 10.0
+omni_range = 0.3
+
+[node name="BrakeLightR" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.41986, 0.763616, -1.5737 )
+light_color = Color( 0.988235, 0, 0, 1 )
+light_energy = 10.0
+omni_range = 0.3
+
+[node name="police" parent="." instance=ExtResource( 1 )]
+
+[node name="CarArea" type="Area" parent="."]
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape" type="CollisionShape" parent="CarArea"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.678806, 0 )
+shape = SubResource( 2 )
+
+[node name="RightIndicatorCheck" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.14482, 0, 0 )
+collision_layer = 2
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="RightIndicatorCheck"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.588125, 0, 7.41152 )
+shape = SubResource( 3 )
+
+[node name="LeftIndicatorCheck" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.31047, 0, 0 )
+collision_layer = 2
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="LeftIndicatorCheck"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.01155, 0, 7.43057 )
+shape = SubResource( 3 )
+
+[node name="FrontCheck" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.96894 )
+collision_layer = 2
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="FrontCheck"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.32256 )
+shape = SubResource( 4 )
+
+[connection signal="tween_completed" from="Tween" to="." method="_end_flashing"]
+[connection signal="timeout" from="Timers/Delay" to="." method="_calc_move_to_next_lane"]
+[connection signal="timeout" from="Timers/InitialDelay" to="." method="_delay"]
+[connection signal="timeout" from="Timers/LightTimerL" to="." method="_left_indicator"]
+[connection signal="timeout" from="Timers/LightTimerR" to="." method="_right_indicator"]
+[connection signal="area_entered" from="FrontCheck" to="." method="_on_FrontCheck_area_entered"]
+[connection signal="area_exited" from="FrontCheck" to="." method="_on_FrontCheck_area_exited"]

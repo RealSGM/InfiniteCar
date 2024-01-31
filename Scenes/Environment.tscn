@@ -1,0 +1,128 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Assets/KenneyRoads/road_straight.dae" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Environment.gd" type="Script" id=2]
+[ext_resource path="res://Resources/Materials/SidewalkMaterial.tres" type="Material" id=3]
+[ext_resource path="res://Resources/Materials/CurbMaterial.tres" type="Material" id=4]
+[ext_resource path="res://Assets/KenneyCity/large_buildingF.dae" type="PackedScene" id=5]
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 7, 1, 1 )
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="CubeMesh" id=6]
+material = SubResource( 7 )
+size = Vector3( 1, 0.25, 200 )
+
+[sub_resource type="CubeMesh" id=8]
+material = ExtResource( 3 )
+size = Vector3( 4, 0.125, 200 )
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 7.5, 0.1, 200 )
+
+[node name="Environment" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="CarProgressDetector" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 2.017, -50 )
+
+[node name="CollisionShape" type="CollisionShape" parent="CarProgressDetector"]
+shape = SubResource( 4 )
+
+[node name="Roads" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -400 )
+
+[node name="_TempL" type="Spatial" parent="Roads"]
+transform = Transform( 1, 0, 0, 0, 2, 0, 0, 0, 1, -3, -20, 0 )
+
+[node name="large_buildingF7" parent="Roads/_TempL" instance=ExtResource( 5 )]
+transform = Transform( -1.74846e-06, 0, 20, 0, 40, 0, -40, 0, -8.74228e-07, -24, 0, 400 )
+
+[node name="large_buildingF8" parent="Roads/_TempL" instance=ExtResource( 5 )]
+transform = Transform( -1.74846e-06, 0, 20, 0, 40, 0, -40, 0, -8.74228e-07, -24, 0, 320 )
+
+[node name="large_buildingF9" parent="Roads/_TempL" instance=ExtResource( 5 )]
+transform = Transform( -1.74846e-06, 0, 20, 0, 40, 0, -40, 0, -8.74228e-07, -24, 0, 239.892 )
+
+[node name="large_buildingF10" parent="Roads/_TempL" instance=ExtResource( 5 )]
+transform = Transform( -1.74846e-06, 0, 20, 0, 40, 0, -40, 0, -8.74228e-07, -24, 0, 159.892 )
+
+[node name="large_buildingF11" parent="Roads/_TempL" instance=ExtResource( 5 )]
+transform = Transform( -1.74846e-06, 0, 20, 0, 40, 0, -40, 0, -8.74228e-07, -24, 0, 79.8915 )
+
+[node name="large_buildingF12" parent="Roads/_TempL" instance=ExtResource( 5 )]
+transform = Transform( -1.74846e-06, 0, 20, 0, 40, 0, -40, 0, -8.74228e-07, -24, 0, -0.10849 )
+
+[node name="_TempR" type="Spatial" parent="Roads"]
+transform = Transform( 1, 0, 0, 0, 2, 0, 0, 0, 1, -9, -20, 0 )
+
+[node name="large_buildingF" parent="Roads/_TempR" instance=ExtResource( 5 )]
+transform = Transform( -1.74846e-06, 0, -20, 0, 40, 0, 40, 0, -8.74228e-07, 50, 0, 400 )
+
+[node name="large_buildingF2" parent="Roads/_TempR" instance=ExtResource( 5 )]
+transform = Transform( -1.74846e-06, 0, -20, 0, 40, 0, 40, 0, -8.74228e-07, 50, 0, 320 )
+
+[node name="large_buildingF3" parent="Roads/_TempR" instance=ExtResource( 5 )]
+transform = Transform( -1.74846e-06, 0, -20, 0, 40, 0, 40, 0, -8.74228e-07, 50, 0, 239.892 )
+
+[node name="large_buildingF4" parent="Roads/_TempR" instance=ExtResource( 5 )]
+transform = Transform( -1.74846e-06, 0, -20, 0, 40, 0, 40, 0, -8.74228e-07, 50, 0, 159.892 )
+
+[node name="large_buildingF5" parent="Roads/_TempR" instance=ExtResource( 5 )]
+transform = Transform( -1.74846e-06, 0, -20, 0, 40, 0, 40, 0, -8.74228e-07, 50, 0, 79.8915 )
+
+[node name="large_buildingF6" parent="Roads/_TempR" instance=ExtResource( 5 )]
+transform = Transform( -1.74846e-06, 0, -20, 0, 40, 0, 40, 0, -8.74228e-07, 50, 0, -0.10849 )
+
+[node name="PavementL" type="Spatial" parent="Roads"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 2, -1, 0.25, 200 )
+
+[node name="Curb" type="MeshInstance" parent="Roads/PavementL"]
+mesh = SubResource( 6 )
+skeleton = NodePath("../../..")
+material/0 = ExtResource( 4 )
+
+[node name="Sidewalk" type="MeshInstance" parent="Roads/PavementL"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, -0.125, 0 )
+mesh = SubResource( 8 )
+skeleton = NodePath("../../..")
+material/0 = ExtResource( 3 )
+
+[node name="PavementR" type="Spatial" parent="Roads"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 2, 18, 0.25, 200 )
+
+[node name="Curb" type="MeshInstance" parent="Roads/PavementR"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 0 )
+mesh = SubResource( 6 )
+skeleton = NodePath("../../..")
+material/0 = ExtResource( 4 )
+
+[node name="Sidewalk" type="MeshInstance" parent="Roads/PavementR"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, -0.125, 0 )
+mesh = SubResource( 8 )
+skeleton = NodePath("../../..")
+material/0 = ExtResource( 3 )
+
+[node name="RoadCollisionShape" type="CollisionShape" parent="Roads"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.101, 200 )
+shape = SubResource( 3 )
+
+[node name="MidRoad" parent="Roads" instance=ExtResource( 1 )]
+transform = Transform( -1.74846e-05, 0, 3, 0, 10, 0, -400, 0, -1.31134e-07, 7, 0, 200 )
+
+[node name="LeftRoad" parent="Roads" instance=ExtResource( 1 )]
+transform = Transform( -1.74846e-05, 0, 3, 0, 10, 0, -400, 0, -1.31134e-07, 4, 0, 200 )
+
+[node name="LeftLeftRoad" parent="Roads" instance=ExtResource( 1 )]
+transform = Transform( -1.74846e-05, 0, 3, 0, 10, 0, -400, 0, -1.31134e-07, 1, 0, 200 )
+
+[node name="RightRoad" parent="Roads" instance=ExtResource( 1 )]
+transform = Transform( -1.74846e-05, 0, 3, 0, 10, 0, -400, 0, -1.31134e-07, 10, 0, 200 )
+
+[node name="RightRightRoad" parent="Roads" instance=ExtResource( 1 )]
+transform = Transform( -1.74846e-05, 0, 3, 0, 10, 0, -400, 0, -1.31134e-07, 13, 0, 200 )
+
+[node name="Buildings" type="Spatial" parent="."]

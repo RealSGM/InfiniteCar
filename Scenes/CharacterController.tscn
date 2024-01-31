@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/CharacterController.gd" type="Script" id=1]
+[ext_resource path="res://Assets/KenneyCars/sedan.dae" type="PackedScene" id=2]
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 0.751509, 0.66235, 1.22396 )
+
+[node name="Player" type="RigidBody" groups=["Player"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.5, 0 )
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource( 1 )
+
+[node name="Car" parent="." instance=ExtResource( 2 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+
+[node name="CarCollision" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.666775, 0.0239451 )
+shape = SubResource( 2 )
+
+[node name="GroundCheck" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.744427, 0 )
+enabled = true
+exclude_parent = false
+
+[node name="MoveTimer" type="Timer" parent="."]
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="timeout" from="MoveTimer" to="." method="_on_MoveTimer_timeout"]
